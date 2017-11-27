@@ -1,11 +1,13 @@
 .item {
-    outline: 5px solid black;
+    outline: 3px solid black;
     width: 100px;
     height: 70px;
-    outline-offset: -5px;
+    //outline-offset: -3px;
+    padding: 3px;
+    margin: 4px;
 }
 .active {
-    outline: 5px solid yellow;
+    outline: 3px solid yellow;
 }
 body {
     background: black;
