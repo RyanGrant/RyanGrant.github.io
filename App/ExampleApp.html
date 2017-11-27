@@ -40,7 +40,7 @@
     <div id="weapons" ng-if="!ctrl.weaponsHide">
         <h2>Weapons</h2>
         <span ng-repeat="item in ctrl.weaponList">
-            <img uib-popover class="item inactive" 
+            <img uib-popover class="item"
                  ng-click="ctrl.toggle(item)" 
                  ng-src="{{item.image}}" 
                  popover-trigger="'mouseenter'" 
@@ -53,7 +53,7 @@
     <div id="hunter" ng-if="!ctrl.hunterHide">
         <h2>Hunter</h2>
         <span ng-repeat="item in ctrl.hunterList">
-            <img uib-popover class="item inactive"
+            <img uib-popover class="item"
                  ng-click="ctrl.toggle(item)"
                  ng-src="{{item.image}}"
                  popover-trigger="'mouseenter'"
@@ -66,7 +66,7 @@
     <div id="warlock" ng-if="!ctrl.warlockHide">
         <h2>Warlock</h2>
         <span ng-repeat="item in ctrl.warlockList">
-            <img uib-popover class="item inactive"
+            <img uib-popover class="item"
                  ng-click="ctrl.toggle(item)"
                  ng-src="{{item.image}}"
                  popover-trigger="'mouseenter'"
@@ -79,7 +79,7 @@
     <div id="titan" ng-if="!ctrl.titanHide">
         <h2>Titan</h2>
         <span ng-repeat="item in ctrl.titanList">
-            <img uib-popover class="item inactive"
+            <img uib-popover class="item"
                  ng-click="ctrl.toggle(item)"
                  ng-src="{{item.image}}"
                  popover-trigger="'mouseenter'"
