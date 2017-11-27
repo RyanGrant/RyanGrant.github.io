@@ -1,6 +1,6 @@
 var app = angular.module('App', ['ngAnimate', 'ui.bootstrap', 'ngCookies'])
-    .controller('mainController', ['$cookies', '$http',
-        function ($cookies, $http) {
+    .controller('mainController', ['$cookies',
+        function ($cookies) {
             var vm = this;
             //console.log(vm.weaponList);
             vm.init = function () {
