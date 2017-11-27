@@ -30,7 +30,7 @@ p {
 }
 
 .mainDetails {
-	padding: 25px 25px;
+	padding: 25px 15px;
 	border-bottom: 2px solid #cf8a05;
 	background: #ededed;
 }
@@ -76,7 +76,7 @@ p {
 #contactDetails ul {
 	list-style-type: none;
 	font-size: 0.9em;
-	margin-top: 2px;
+	margin-top: 12px;
 }
 
 #contactDetails ul li {
