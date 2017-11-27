@@ -30,7 +30,7 @@ p {
 }
 
 .mainDetails {
-	padding: 25px 35px;
+	padding: 25px 25px;
 	border-bottom: 2px solid #cf8a05;
 	background: #ededed;
 }
@@ -55,12 +55,12 @@ p {
 #headshot {
 	width: 12.5%;
 	float: left;
-	margin-right: 30px;
+	margin-right: 0px;
 }
 
 #headshot img {
-	width: 100%;
-	height: auto;
+	width: 60%;
+	height: 60%;
 	-webkit-border-radius: 50px;
 	border-radius: 50px;
 }
