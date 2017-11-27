@@ -20,10 +20,36 @@
 <form action="../index.html">
     <button type="submit" style="width: 200px;height: 80px;">Return to resume</button>
 </form>
+<div style="color: white">
+<h2>Description - </h2>
+This site is a basic way to track 
+items obtained in the video game Destiny 2 made by the company Bungie.  
+I'm trying to recreate a website that was made for the original Destiny game 
+at www.destinyexotics.com which looks like <a href="destinyExotics.jpg"><b>this</b></a>
+ by using AngularJS which I wanted to become 
+familiar with before first using it at work.  It was also deployed 
+previously as a C# web application on an AWS EBS instance, but it didnt
+ need to stay there as it's now completely in Angular with no C# left.  
+The data is populated by a Python script seen <a href="manifestItems.py"><b>here</b></a> which grabs from the
+ Destiny API.  I had originally planned to make the API calls in C#, but 
+found it was significantly easier to unpack the Destiny SQLite DB with Python.
+<br />
+<!-- Will make this live once I actually have a good number of cool features.  If you are reading this, the next
+cool feature I'm working on is authenticating users with the API so it'll autopopulate the items that you've already
+obtained in the game.
+
+A few neat features are - 
+<ul>
+	<li>Popovers - Hover over an item and it'll display a description box.  On mobile, press an item once</li>
+	<li>Cookies - Click on a few items so they are lit up.  Refresh your page and you'll see it remembers which you've selected</li>
+
+</ul>
+-->
+</div>
     <h1>Exotic Weapons and Armor</h1>
 
 
-    <script type="text/ng-template" id="tpl.html">
+    <script type="text/ng-template" id="itemPopover.html">
         <div class="popover-content">
             <div>
                 <div>
@@ -45,7 +71,7 @@
                  ng-src="{{item.image}}" 
                  popover-trigger="'mouseenter'" 
                  popover-placement="bottom" 
-                 uib-popover-template="'tpl.html'"
+                 uib-popover-template="'itemPopover.html'"
                  ng-class="{'active': item.active}"
             />
         </span>
@@ -58,7 +84,7 @@
                  ng-src="{{item.image}}"
                  popover-trigger="'mouseenter'"
                  popover-placement="bottom"
-                 uib-popover-template="'tpl.html'"
+                 uib-popover-template="'itemPopover.html'"
                  ng-class="{'active': item.active}" />
         </span>
 
@@ -71,7 +97,7 @@
                  ng-src="{{item.image}}"
                  popover-trigger="'mouseenter'"
                  popover-placement="bottom"
-                 uib-popover-template="'tpl.html'"
+                 uib-popover-template="'itemPopover.html'"
                  ng-class="{'active': item.active}" />
         </span>
 
@@ -84,7 +110,7 @@
                  ng-src="{{item.image}}"
                  popover-trigger="'mouseenter'"
                  popover-placement="bottom"
-                 uib-popover-template="'tpl.html'"
+                 uib-popover-template="'itemPopover.html'"
                  ng-class="{'active': item.active}" />
         </span>
     </div>
