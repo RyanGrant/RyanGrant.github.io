@@ -2,18 +2,14 @@
     outline: 5px solid black;
     width: 100px;
     height: 70px;
-    outline-offset: -4px;
+    outline-offset: -5px;
 }
 .active {
     outline: 5px solid yellow;
-    filter: brightness(150%);
-    box-shadow: 5px 5px 5px #fff;
 }
-
 body {
     background: black;
 }
-
 h1 {
     color: white;
 }
