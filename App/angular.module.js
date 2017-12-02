@@ -18,6 +18,9 @@ var app = angular.module('App', ['ngAnimate', 'ui.bootstrap', 'ngCookies'])
                     var cookieHunter = $cookies.get('hunterList');
                     var cookieWarlock = $cookies.get('warlockList');
                     var cookieTitan = $cookies.get('titanList');
+                    var cookieShip = $cookies.get('shipList');
+                    var cookieVehicle = $cookies.get('vehicleList');
+                    var cookieEmote = $cookies.get('emoteList');
 
                     for (i = 0; i < vm.weaponList.length; i++) {
                         if (cookieWeapons[i] == '1') {
@@ -49,6 +52,30 @@ var app = angular.module('App', ['ngAnimate', 'ui.bootstrap', 'ngCookies'])
                         }
                         else {
                             vm.titanList[i].active = false;
+
+                        }
+                    } for (i = 0; i < vm.shipList.length; i++) {
+                        if (cookieShip[i] == '1') {
+                            vm.shipList[i].active = true;
+                        }
+                        else {
+                            vm.shipList[i].active = false;
+
+                        }
+                    } for (i = 0; i < vm.vehicleList.length; i++) {
+                        if (cookieVehicle[i] == '1') {
+                            vm.vehicleList[i].active = true;
+                        }
+                        else {
+                            vm.vehicleList[i].active = false;
+
+                        }
+                    } for (i = 0; i < vm.emoteList.length; i++) {
+                        if (cookieEmote[i] == '1') {
+                            vm.emoteList[i].active = true;
+                        }
+                        else {
+                            vm.emoteList[i].active = false;
 
                         }
                     }
@@ -94,18 +121,48 @@ var app = angular.module('App', ['ngAnimate', 'ui.bootstrap', 'ngCookies'])
                         cookieTitan += '0';
 
                     }
+                } for (i = 0; i < vm.shipList.length; i++) {
+                    if (vm.shipList[i].active) {
+                        cookieShip += '1';
+                    }
+                    else {
+                        cookieShip += '0';
+
+                    }
+                } for (i = 0; i < vm.vehicleList.length; i++) {
+                    if (vm.vehicleList[i].active) {
+                        cookieVehicle += '1';
+                    }
+                    else {
+                        cookieVehicle += '0';
+
+                    }
+                } for (i = 0; i < vm.emoteList.length; i++) {
+                    if (vm.emoteList[i].active) {
+                        cookieEmote += '1';
+                    }
+                    else {
+                        cookieEmote += '0';
+
+                    }
                 }
                 $cookies.put('weaponList', cookieWeapons);
                 $cookies.put('hunterList', cookieHunter);
                 $cookies.put('warlockList', cookieWarlock);
                 $cookies.put('titanList', cookieTitan);
+            	$cookies.put('shipList', cookieShip);
+            	$cookies.put('emoteList', cookieEmote);
+            	$cookies.put('vehicleList', cookieVehicle);
             }
 
             vm.initialSetup = function () {
                 vm.weaponList = exoticWeaponList;
-                vm.hunterList = hunterExoticArmorList;
-                vm.warlockList = warlockExoticArmorList;
-                vm.titanList = titanExoticArmorList;
+                vm.hunterList = exoticHunterArmorList;
+                vm.warlockList = exoticWarlockArmorList;
+                vm.titanList = exoticTitanArmorList;
+		vm.shipList = exoticShipList;
+		vm.emoteList = exoticEmoteList;
+		vm.vehicleList = exoticVehicleList;
             }
     }]
 )

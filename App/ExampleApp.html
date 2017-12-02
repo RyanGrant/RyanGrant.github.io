@@ -63,6 +63,9 @@ A few neat features are -
     <button ng-click="ctrl.hunterHide = !ctrl.hunterHide">Hunter Armor</button>
     <button ng-click="ctrl.warlockHide = !ctrl.warlockHide">Warlock Armor</button>
     <button ng-click="ctrl.titanHide = !ctrl.titanHide">Titan Armor</button>
+    <button ng-click="ctrl.shipHide = !ctrl.shipHide">Ships</button>
+    <button ng-click="ctrl.vehicleHide = !ctrl.vehicleHide">Vehicles</button>
+    <button ng-click="ctrl.emoteHide = !ctrl.emoteHide">Emotes</button>
     <div id="weapons" ng-if="!ctrl.weaponsHide">
         <h2>Weapons</h2>
         <span ng-repeat="item in ctrl.weaponList">
@@ -105,6 +108,42 @@ A few neat features are -
     <div id="titan" ng-if="!ctrl.titanHide">
         <h2>Titan</h2>
         <span ng-repeat="item in ctrl.titanList">
+            <img uib-popover class="item"
+                 ng-click="ctrl.toggle(item)"
+                 ng-src="{{item.image}}"
+                 popover-trigger="'mouseenter'"
+                 popover-placement="auto"
+                 uib-popover-template="'itemPopover.html'"
+                 ng-class="{'active': item.active}" />
+        </span>
+    </div>
+    <div id="ship" ng-if="!ctrl.shipHide">
+        <h2>Ships</h2>
+        <span ng-repeat="item in ctrl.shipList">
+            <img uib-popover class="item"
+                 ng-click="ctrl.toggle(item)"
+                 ng-src="{{item.image}}"
+                 popover-trigger="'mouseenter'"
+                 popover-placement="auto"
+                 uib-popover-template="'itemPopover.html'"
+                 ng-class="{'active': item.active}" />
+        </span>
+    </div>
+    <div id="vehicle" ng-if="!ctrl.vehicleHide">
+        <h2>Vehicles</h2>
+        <span ng-repeat="item in ctrl.vehicleList">
+            <img uib-popover class="item"
+                 ng-click="ctrl.toggle(item)"
+                 ng-src="{{item.image}}"
+                 popover-trigger="'mouseenter'"
+                 popover-placement="auto"
+                 uib-popover-template="'itemPopover.html'"
+                 ng-class="{'active': item.active}" />
+        </span>
+    </div>
+    <div id="emote" ng-if="!ctrl.emoteHide">
+        <h2>Emotes</h2>
+        <span ng-repeat="item in ctrl.emoteList">
             <img uib-popover class="item"
                  ng-click="ctrl.toggle(item)"
                  ng-src="{{item.image}}"
