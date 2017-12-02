@@ -1,20 +1,12 @@
-#All of these imports used, if the code is broken down into several sections like it is on the wiki,
-#might not make sense to include all of them at the beginning, but will save time for new devs
-
-import requests, zipfile, os, pickle, json, sqlite3
+import requests, zipfile, os, json, sqlite3
 
 def get_manifest():
-    manifest_url = 'http://www.bungie.net/Platform/Destiny2/Manifest/'
 
-    #get the manifest location from the json
+    manifest_url = 'http://www.bungie.net/Platform/Destiny2/Manifest/'
+    print("Downloading Manifest from http://www.bungie.net/Platform/Destiny2/Manifest/...")
     r = requests.get(manifest_url)
     manifest = r.json()
     mani_url = 'http://www.bungie.net'+manifest['Response']['mobileWorldContentPaths']['en']
-
-
-    #Delete manifest files
-    os.remove('manifest.content')
-    os.remove('MANZIP')
 
     #Download the file, write it to 'MANZIP'
     r = requests.get(mani_url)
@@ -22,156 +14,128 @@ def get_manifest():
         zip.write(r.content)
     print("Download Complete!")
 
-    #Extract the file contents, and rename the extracted file
-    # to 'Manifest.content'
+    print("Unzipping contents...")
+    #Extract the file contents, rename the extracted file to 'Manifest.content'
     with zipfile.ZipFile('MANZIP') as zip:
         name = zip.namelist()
         zip.extractall()
     os.rename(name[0], 'Manifest.content')
+    os.remove('MANZIP')
     print('Unzipped!')
 
-""" new stuff
-  'DestinyActivityDefinition': 'hash',
-  'DestinyActivityTypeDefinition': 'hash',
-  'DestinyClassDefinition': 'hash',
-  'DestinyGenderDefinition': 'hash',
-  'DestinyInventoryBucketDefinition': 'hash',
-  'DestinyInventoryItemDefinition': 'hash',
-  'DestinyProgressionDefinition': 'hash',
-  'DestinyRaceDefinition': 'hash',
-  'DestinyTalentGridDefinition': 'hash',
-  'DestinyUnlockFlagDefinition': 'hash',
-  'DestinyVendorDefinition': 'hash',
-  'DestinyHistoricalStatsDefinition': 'hash',
-  'DestinyDirectorBookDefinition': 'hash',
-  'DestinyStatDefinition': 'hash',
-  'DestinySandboxPerkDefinition': 'hash',
-  'DestinyDestinationDefinition': 'hash',
-  'DestinyPlaceDefinition': 'hash',
-  'DestinyActivityBundleDefinition': 'hash',
-  'DestinyStatGroupDefinition': 'hash',
-  'DestinySpecialEventDefinition': 'hash',
-  'DestinyFactionDefinition': 'hash',
-  'DestinyVendorCategoryDefinition': 'hash',
-  'DestinyEnemyRaceDefinition': 'hash',
-  'DestinyScriptedSkullDefinition': 'hash',
-  'DestinyTriumphSetDefinition': 'hash',
-  'DestinyItemCategoryDefinition': 'hash',
-  'DestinyRewardSourceDefinition': 'hash',
-  'DestinyObjectiveDefinition': 'hash',
-  'DestinyDamageTypeDefinition': 'hash',
-  'DestinyCombatantDefinition': 'hash',
-  'DestinyActivityCategoryDefinition': 'hash',
-  'DestinyRecordDefinition': 'hash',
-  'DestinyRecordBookDefinition': 'hash',
-  'DestinyActivityModeDefinition': 'hash',
-  'DestinyMedalTierDefinition': 'hash',
-  'DestinyBondDefinition': 'hash',
-  'DestinyLocationDefinition': 'hash',
-  'DestinyGrimoireDefinition': 'hash',
-  'DestinyGrimoireCardDefinition': 'hash',
-"""
-""" old stuff
-'DestinyActivityDefinition': 'activityHash',
-    'DestinyActivityTypeDefinition': 'activityTypeHash',
-    'DestinyClassDefinition': 'classHash',
-    'DestinyGenderDefinition': 'genderHash',
-    'DestinyInventoryBucketDefinition': 'bucketHash',
-    'DestinyInventoryItemDefinition': 'itemHash',
-    'DestinyProgressionDefinition': 'progressionHash',
-    'DestinyRaceDefinition': 'raceHash',
-    'DestinyTalentGridDefinition': 'gridHash',
-    'DestinyUnlockFlagDefinition': 'flagHash',
-    'DestinyHistoricalStatsDefinition': 'statId',
-    'DestinyDirectorBookDefinition': 'bookHash',
-    'DestinyStatDefinition': 'statHash',
-    'DestinySandboxPerkDefinition': 'perkHash',
-    'DestinyDestinationDefinition': 'destinationHash',
-    'DestinyPlaceDefinition': 'placeHash',
-    'DestinyActivityBundleDefinition': 'bundleHash',
-    'DestinyStatGroupDefinition': 'statGroupHash',
-    'DestinySpecialEventDefinition': 'eventHash',
-    'DestinyFactionDefinition': 'factionHash',
-    'DestinyVendorCategoryDefinition': 'categoryHash',
-    'DestinyEnemyRaceDefinition': 'raceHash',
-    'DestinyScriptedSkullDefinition': 'skullHash',
-    'DestinyGrimoireCardDefinition': 'cardId'
-"""
-hashes = {
-  'DestinyInventoryItemDefinition': 'itemHash'
-
-}
-"""
-hashes_trunc = {
-    'DestinyInventoryItemDefinition': 'itemHash',
-    'DestinyTalentGridDefinition': 'gridHash',
-    'DestinyHistoricalStatsDefinition': 'statId',
-    'DestinyStatDefinition': 'statHash',
-    'DestinySandboxPerkDefinition': 'perkHash',
-    'DestinyStatGroupDefinition': 'statGroupHash'
-}
-"""
-
-def build_dict(hash_dict):
-    #connect to the manifest
+def build_dict():
     con = sqlite3.connect('manifest.content')
-    print('Connected to this dumb sqlite db thing')
-    #create a cursor object
+    print('Connected to sqlite db')
     cur = con.cursor()
 
-    all_data = {}
-    #for every table name in the dictionary
-    for table_name in hash_dict.keys():
-        #get a list of all the jsons from the table
-        cur.execute('SELECT json from '+table_name)
-        print('Generating '+table_name+' dictionary....')
+    cur.execute('SELECT json from DestinyInventoryItemDefinition')
+    print('Generating DestinyInventoryItemDefinition dictionary....')
 
-        #this returns a list of tuples: the first item in each tuple is our json
-        items = cur.fetchall()
+    items = cur.fetchall()
+    item_jsons = [json.loads(item[0]) for item in items]
+    item_dict = {}
 
-        #create a list of jsons
-        item_jsons = [json.loads(item[0]) for item in items]
-        #print(item_jsons[0][hash_dict[table_name]])
-
-        #create a dictionary with the hashes as keys
-        #and the jsons as values
-        item_dict = {}
-        #hash = hash_dict[table_name]
-        #print(hash)
-        #print(item_jsons[30])
-        #'displayProperties'
-        #'screenshot'
-        #'itemTypeDisplayName'
-        #'itemTypeAndTierDisplayName'
-        for item in item_jsons:
-            item_dict[item['displayProperties']['name']] = item
-
-        #add that dictionary to our all_data using the name of the table
-        #as a key.
-        all_data[table_name] = item_dict
+    for item in item_jsons:
+       if ( item['displayProperties']['name'] != "Classified" ):
+           if ( item['itemTypeDisplayName'] != None):
+               if ( item['itemTypeAndTierDisplayName'] ):
+                   if ( "Exotic" in item['itemTypeAndTierDisplayName'] and "Intrinsic" not in item['itemTypeAndTierDisplayName']):
+                       if ( item['displayProperties']['name'] ):
+                           item_dict[item['displayProperties']['name']] = item['displayProperties']
+                           item_dict[item['displayProperties']['name']]['type'] = item['itemTypeDisplayName']
+                           item_dict[item['displayProperties']['name']]['tier'] = item['itemTypeAndTierDisplayName']
+                           item_dict[item['displayProperties']['name']]['image'] = "https://www.bungie.net" + item['displayProperties']['icon']
+                           item_dict[item['displayProperties']['name']]['active'] = "false"
+                           try:
+                               item_dict[item['displayProperties']['name']]['class'] = item['quality']['infusionCategoryName']
+                           except:
+                               item_dict[item['displayProperties']['name']]['class'] = "null"
 
     print('Dictionary Generated!')
-    return all_data
 
-#check if pickle exists, if not create one.
-if os.path.isfile(r'C:\Users\Ryan.Grant\Desktop\git\pythonManifest\manifest.content') == True:
-    print("Manifest not found, I'll download it now")
-    #get_manifest()
-    all_data = build_dict(hashes)
-    with open('manifest.pickle', 'wb') as data:
-        pickle.dump(all_data, data)
-        print("'manifest.pickle' created!\nDONE!")
-else:
-    print('Pickle Exists')
+    return item_dict
 
-with open('manifest.pickle', 'rb') as data:
-    all_data = pickle.load(data)
+def saveToJs(data):
+    weapons = []
+    armor = []
+    warlock = []
+    hunter = []
+    titan = []
+    weapon_ornaments = []
+    ships = []
+    emotes = []
+    vehicles = []
+    for item in list(data):
+        del(data[item]['icon'])
+        del(data[item]['hasIcon'])
 
-hash = 1274330686
-print(all_data['DestinyInventoryItemDefinition'])
-ghorn = all_data['DestinyInventoryItemDefinition'][hash]
+        if (data[item]['type'] == "Weapon Ornament"):
+            weapon_ornaments.append(data[item])
+        elif (data[item]['type'] == "Ship"):
+            ships.append(data[item])
+        elif (data[item]['type'] == "Emote"):
+            emotes.append(data[item])
+        elif (data[item]['type'] == "Vehicle"):
+            vehicles.append(data[item])
+        elif (data[item]['type'] == "Trait"):
+            del(data[item])
+        elif (data[item]['type'] == "Helmet"):
+            armor.append(data[item])
+        elif (data[item]['type'] == "Chest Armor"):
+            armor.append(data[item])
+        elif (data[item]['type'] == "Leg Armor"):
+            armor.append(data[item])
+        elif (data[item]['type'] == "Gauntlets"):
+            armor.append(data[item])
+        elif (data[item]['type'] == "Engram"):
+            del(data[item])
+        else:
+            weapons.append(data[item])
+        
+        
+    for piece in armor:
+        if ("warlock" in piece['class']):
+            warlock.append(piece)
+        elif ("titan" in piece['class']):
+            titan.append(piece)
+        elif ("hunter" in piece['class']):
+            hunter.append(piece)
+        else:
+            print("This armor piece has an issue", end="")
+            print(piece)
+            
+    with open("ExampleData.js", "w") as text_file:
+        print("\nvar exoticHunterArmorList = ", file=text_file, end="")
+        print(hunter, file=text_file)
+        print("\nvar exoticTitanArmorList = ", file=text_file, end="")
+        print(titan, file=text_file)
+        print("\nvar exoticWarlockArmorList = ", file=text_file, end="")
+        print(warlock, file=text_file)
+        print("\nvar exoticWeaponList = ", file=text_file, end="")
+        print(weapons, file=text_file)
+        print("\nvar exoticVehicleList = ", file=text_file, end="")
+        print(vehicles, file=text_file)
+        print("\nvar exoticShipList = ", file=text_file, end="")
+        print(ships, file=text_file)
+        print("\nvar exoticEmoteList = ", file=text_file, end="")
+        print(emotes, file=text_file)
+    #print(len(data))
+    #print(data["Rat King"])
+    #from collections import Counter
+print("Starting...")
 
-print('Name: '+ghorn['itemName'])
-print('Type: '+ghorn['itemTypeName'])
-print('Tier: '+ghorn['tierTypeName'])
-print(ghorn['itemDescription'])
+if (os.path.isfile('ExampleData.js')):
+    print("Found existing data, overwriting...")
+    os.remove('ExampleData.js')
+get_manifest()
+all_data = build_dict()
+os.remove('Manifest.content')
+print("Formatting and saving to JavaScript file...")
+saveToJs(all_data)
+print("Done")
+
+#print(len(all_data))
+#print(all_data['Coldheart']['tier'])
+#print("Exotic" in all_data['Coldheart']['tier'])
+#print(not all_data['Raven Shard']['tier'])
+
