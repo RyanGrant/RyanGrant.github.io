@@ -8,13 +8,15 @@
     <link href="../../Style/ExampleApp.css" rel="stylesheet" />
 </head>
 <body>
-<div ng-app="app" ng-controller="loginController as ctrl" data-ng-init="ctrl.init()">
+<div ng-app="app" ng-controller="secureController as ctrl" data-ng-init="ctrl.init()">
 <form action="../index.html">
     <button type="submit" style="width: 200px;height: 80px;">Return to resume</button>
 </form>
 <div style="color: white">
 	<h1>Login</h1>
 {{ctrl.name}}
+<h1>Secure Web Page</h1>
+<b>Access Token: </b> {{accessToken}}
 	<button ng-click="ctrl.login()">Login with Imgur</button>
 </div>
 
@@ -25,6 +27,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
 <script src="../angular.module.js"></script>
-<script src="loginController.js"></script>
+<script src="SecureController.js"></script>
 </body>
 </html>
