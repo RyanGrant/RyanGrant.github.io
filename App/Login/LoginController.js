@@ -8,6 +8,6 @@ function loginController() {
 
     
     vm.login = function() {
-        window.location.href = "https://www.bungie.net/en/OAuth/Authorize?client_id=" + "22434" + "&response_type=token"
+        window.location.href = "https://www.bungie.net/en/OAuth/Authorize?client_id=" + "22434" + "&response_type=code"
     }
 }
