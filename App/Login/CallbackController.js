@@ -6,21 +6,22 @@ function callbackController() {
     var vm = this;
     vm.name = "HELLO";
 
-          var callbackCode = (document.URL).split("=")[1];
+	var callbackCode = (document.URL).split("=")[1];
 
-//https://www.bungie.net/en/OAuth/Authorize?client_id=22434&response_type=code
-//https://www.bungie.net/Platform/App/OAuth/Token/client_id=22434&grant_type=authorization_code&code=2fa0f60eb62ebf5f3a2e5111cb26e4c3
+	//https://www.bungie.net/en/OAuth/Authorize?client_id=22434&response_type=code
+	//https://www.bungie.net/Platform/App/OAuth/Token/client_id=22434&grant_type=authorization_code&code=2fa0f60eb62ebf5f3a2e5111cb26e4c3
   
-var req = {
- method: 'POST',
- url: 'https://www.bungie.net/Platform/App/OAuth/Token',
- data: { client_id: '22434',
-	 grant_type: 'authorization_code',
-	 code: callbackCode
- }
-}
-console.log(req);
-
+	var req = {
+		method: 'POST',
+		url: 'https://www.bungie.net/Platform/App/OAuth/Token',
+		data: { 
+			client_id: '22434',
+			grant_type: 'authorization_code',
+			code: callbackCode
+		}
+	}
+	console.log(req);
+	console.log("testing");
 /*
             var responseParameters = (callbackResponse).split("&");
             var parameterMap = [];
