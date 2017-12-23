@@ -20,6 +20,12 @@ function callbackController() {
 			code: callbackCode
 		}
 	}
+	$http(req).then(function successCallback(response) {
+	console.log(response);
+  }, function errorCallback(response) {
+	console.log(response);
+  });
+
 	console.log(req);
 	console.log("testing");
 /*
