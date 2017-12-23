@@ -2,7 +2,7 @@ angular
     .module('app')
     .controller('callbackController', callbackController);
 
-function callbackController() { 
+function callbackController($http) { 
     var vm = this;
     vm.name = "HELLO";
 
@@ -13,21 +13,24 @@ function callbackController() {
   
 	var req = {
 		method: 'POST',
-		url: 'https://www.bungie.net/Platform/App/OAuth/Token',
+		url: 'https://www.bungie.net/Platform/App/OAuth/Token/',
+		headers: { 
+			'Content-Type': 'application/x-www-form-urlencoded' 
+		},
 		data: { 
 			client_id: '22434',
 			grant_type: 'authorization_code',
 			code: callbackCode
 		}
 	}
+	console.log(req);
 	$http(req).then(function successCallback(response) {
+		console.log("success");
 	console.log(response);
   }, function errorCallback(response) {
+	  console.log("fail");
 	console.log(response);
-  });
-
-	console.log(req);
-	console.log("testing");
+  });	
 /*
             var responseParameters = (callbackResponse).split("&");
             var parameterMap = [];
