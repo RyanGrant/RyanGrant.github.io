@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
-<script src="ExampleData.js"></script>
-<script src="angular.module.js"></script>
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Destiny 2 Exotic Tracker</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="ExampleApp.css" rel="stylesheet" />
+    <link href="../Style/ExampleApp.css" rel="stylesheet" />
 </head>
 <body>
-<div ng-app="App" ng-controller="mainController as ctrl" data-ng-init="ctrl.init()">
-<form action="../index.html">
+<div ng-app="app" ng-controller="mainController as ctrl" data-ng-init="ctrl.init()">
+<form action="../resume.html">
     <button type="submit" style="width: 200px;height: 80px;">Return to resume</button>
 </form>
 <div style="color: white">
@@ -25,12 +18,12 @@
 This site is a basic way to track 
 items obtained in the video game Destiny 2 made by the company Bungie.  
 I'm trying to recreate a website that was made for the original Destiny game 
-at www.destinyexotics.com which looks like <a href="DestinyExoticsExample.PNG"><b>this</b></a>
+at www.destinyexotics.com which looks like <a href="../Images/DestinyExoticsExample.PNG"><b>this</b></a>
  by using AngularJS which I wanted to become 
 familiar with before first using it at work.  It was also deployed 
 previously as a C# web application on an AWS EBS instance, but it didnt
  need to stay there as it's now completely in Angular with no C# left.  
-The data is populated by a Python script seen <a href="ManifestItems.py"><b>here</b></a> which grabs from the
+The data is populated by a Python script seen <a href="../Python/ManifestItems.py"><b>here</b></a> which grabs from the
  Destiny API.  I had originally planned to make the API calls in C#, but 
 found it was significantly easier to unpack the Destiny SQLite DB with Python.
 <br />
@@ -47,6 +40,7 @@ A few neat features are -
 -->
 </div>
     <h1>Exotic Weapons and Armor</h1>
+    <a href="Login/login.html">Test Page</a>
 
 
     <script type="text/ng-template" id="itemPopover.html">
@@ -154,5 +148,15 @@ A few neat features are -
         </span>
     </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+<script src="angular.module.js"></script>
+<script src="main.controller.js"></script>
+<script src="ExampleData.js"></script>
+<script src="Login/LoginController.js"></script>
 </body>
 </html>
