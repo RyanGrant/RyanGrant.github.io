@@ -47,7 +47,8 @@ def build_dict():
                            item_dict[item['displayProperties']['name']]['image'] = "https://www.bungie.net" + item['displayProperties']['icon']
                            item_dict[item['displayProperties']['name']]['active'] = "false"
                            try:
-                               item_dict[item['displayProperties']['name']]['class'] = item['quality']['infusionCategoryName']
+                               #item_dict[item['displayProperties']['name']]['class'] = item['quality']['infusionCategoryName']
+                               item_dict[item['displayProperties']['name']]['class'] = item['classType']
                            except:
                                item_dict[item['displayProperties']['name']]['class'] = "null"
 
@@ -65,6 +66,8 @@ def saveToJs(data):
     ships = []
     emotes = []
     vehicles = []
+    ghosts = []
+    ornaments = []
     for item in list(data):
         del(data[item]['icon'])
         del(data[item]['hasIcon'])
@@ -87,6 +90,10 @@ def saveToJs(data):
             armor.append(data[item])
         elif (data[item]['type'] == "Gauntlets"):
             armor.append(data[item])
+        elif (data[item]['type'] == "Ghost Shell"):
+            ghosts.append(data[item])
+        elif ("Ornament" in data[item]['type']):
+            ornaments.append(data[item])
         elif (data[item]['type'] == "Engram"):
             del(data[item])
         else:
@@ -94,14 +101,15 @@ def saveToJs(data):
         
         
     for piece in armor:
-        if ("warlock" in piece['class']):
+        if (piece['class'] == 2):
             warlock.append(piece)
-        elif ("titan" in piece['class']):
+        elif (piece['class'] == 0):
             titan.append(piece)
-        elif ("hunter" in piece['class']):
+        elif (piece['class'] == 1):
             hunter.append(piece)
         else:
             print("This armor piece has an issue", end="")
+            print()
             print(piece)
             
     with open("ExampleData.js", "w") as text_file:
@@ -119,6 +127,10 @@ def saveToJs(data):
         print(ships, file=text_file)
         print("\nvar exoticEmoteList = ", file=text_file, end="")
         print(emotes, file=text_file)
+        print("\nvar exoticGhostList = ", file=text_file, end="")
+        print(ghosts, file=text_file)
+        print("\nvar exoticOrnamentList = ", file=text_file, end="")
+        print(ornaments, file=text_file)
     #print(len(data))
     #print(data["Rat King"])
     #from collections import Counter
@@ -138,4 +150,3 @@ print("Done")
 #print(all_data['Coldheart']['tier'])
 #print("Exotic" in all_data['Coldheart']['tier'])
 #print(not all_data['Raven Shard']['tier'])
-
